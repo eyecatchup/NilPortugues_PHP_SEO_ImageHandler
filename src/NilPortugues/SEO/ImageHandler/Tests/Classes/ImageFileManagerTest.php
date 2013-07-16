@@ -129,8 +129,8 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testExternalPathException()
     {
-        $this->setExpectedException('Exception');
-        $this->ImageFileManager->checkExternal('smb://static.mydomain.com/image.jpg');
+        $this->setExpectedException('\Exception');
+        $this->ImageFileManager->checkExternal('smb://google.es');
     }
 
     public function testRelativeDotNormalizeLocalPath()

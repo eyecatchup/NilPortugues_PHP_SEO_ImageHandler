@@ -24,7 +24,7 @@ $downloadDir = 'images/downloaded';
 $imageDomainPath = 'http://localhost/ImageHandlerClass';
 
 //Set up the object depencencies to inject into the ImageHandler instance
-$idr = ImageDataRecordPDO::getInstance($db);
+$idr = new ImageDataRecordPDO($db);
 $ihp = new ImageHTMLParser();
 $ifm = new ImageFileManager();
 $io = new ImageObject();
@@ -32,6 +32,11 @@ $ioc = new ImageObjectCollection();
 
 //Instantiation of ImageHandler
 $imageHandler = new ImageHandler($ihp, $ifm, $io, $ioc, $idr);
+
+$a = $ifm->checkExternal('smb://static.mydomain.com/image.jpg');
+
+var_dump($a);
+die();
 
 /***********************************************************************
  * Usage

@@ -10,35 +10,12 @@ class ImageDataRecordPDO implements \NilPortugues\SEO\ImageHandler\Interfaces\Im
     protected static $db;
     protected $tableName = 'cms_content_images';
 
-    protected function __construct()
-    {
-
-    }
-
     /**
-     * Cloning a Singleton instance is completely forbidden
-     *
-     * @throws \Exception
+     * @param \PDO $pdo
      */
-    protected function __clone()
+    public function __construct(\PDO $pdo)
     {
-        throw new \Exception('A singleton class cannot be cloned');
-    }
-
-    /**
-     * The Singleton method. Retrieves the static object instance.
-     *
-     * @param  \PDO  $pdo
-     * @return mixed
-     */
-    public static function getInstance(\PDO $pdo)
-    {
-        if (!isset(static::$instance)) {
-            static::$instance = new static;
-            self::$db = $pdo;
-        }
-
-        return static::$instance;
+        $this->db = $pdo;
     }
 
 
@@ -71,16 +48,16 @@ class ImageDataRecordPDO implements \NilPortugues\SEO\ImageHandler\Interfaces\Im
 
         $sql = "INSERT INTO $this->tableName(parent_id,title,alt,file_md5,filename,file_extension,filepath,width,height,date_creation) VALUES(?,?,?,?,?,?,?,?,?,?);";
 
-        $q = self::$db->prepare($sql);
+        $q = $this->db->prepare($sql);
         try {
-            self::$db->beginTransaction();
+            $this->db->beginTransaction();
             $q->execute(array_values($values));
-            $id = self::$db->lastInsertId();
-            self::$db->commit();
+            $id = $this->db->lastInsertId();
+            $this->db->commit();
 
             return $id;
         } catch (PDOException $e) {
-            self::$db->rollback();
+            $this->db->rollback();
 
             return false;
         }
@@ -97,7 +74,7 @@ class ImageDataRecordPDO implements \NilPortugues\SEO\ImageHandler\Interfaces\Im
             $placeholders = implode(',', array_fill(0, count($values), '?'));
 
             $sql = "SELECT * FROM " . $this->tableName . " WHERE file_md5 IN ($placeholders);";
-            $q = self::$db->prepare($sql);
+            $q = $this->db->prepare($sql);
             $q->execute($values);
 
             $data = $q->fetchAll();
@@ -114,7 +91,7 @@ class ImageDataRecordPDO implements \NilPortugues\SEO\ImageHandler\Interfaces\Im
     {
         if (!empty($hash)) {
             $sql = "SELECT * FROM " . $this->tableName . " WHERE file_md5 = ?; ";
-            $q = self::$db->prepare($sql);
+            $q = $this->db->prepare($sql);
             $q->execute(array($hash));
             $data = $q->fetch();
 

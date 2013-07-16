@@ -1,7 +1,6 @@
 <?php
 namespace NilPortugues\SEO\ImageHandler\Tests;
 
-use \NilPortugues\SEO\ImageHandler\Classes\DataRecord\ImageDataRecordPDO as ImageDataRecordPDO;
 use \NilPortugues\SEO\ImageHandler\Classes\ImageHTMLParser as ImageHTMLParser;
 use \NilPortugues\SEO\ImageHandler\Classes\ImageFileManager as ImageFileManager;
 use \NilPortugues\SEO\ImageHandler\Classes\ImageObject as ImageObject;
@@ -11,7 +10,6 @@ use \NilPortugues\SEO\ImageHandler\ImageHandler as ImageHandler;
 class ImageHandlerTest extends \PHPUnit_Framework_TestCase
 {
     //Dependency Injection vars
-    protected $db;
     protected $idr;
     protected $ihp;
     protected $ifm;
@@ -22,28 +20,29 @@ class ImageHandlerTest extends \PHPUnit_Framework_TestCase
     //Environment vars
     protected $baseDir = './';
     protected $downloadDir = 'images/downloaded';
-    protected $imageDomain = 'http://static.blog.local/';
+    protected $imageDomain = 'http://static.mydomain.com/';
 
-    //Database
-    protected $dbType = 'mysql';
-    protected $dbHost = 'localhost';
-    protected $dbName = 'sonrisaProject';
-    protected $dbUsername = 'root';
-    protected $dbPassword = 'root';
+    //Images created
+    protected $images = array();
 
     public function setUp()
     {
-        //Set up database connection
-        $dns = $this->dbType . ':dbname=' . $this->dbName . ';host=' . $this->dbHost;
-        $this->db = new \PDO($dns, $this->dbUsername, $this->dbPassword);
-        $this->idr = ImageDataRecordPDO::getInstance($this->db);
+        //Set up database connection.
+        $this->idr =
+            $this->getMockBuilder('\NilPortugues\SEO\ImageHandler\Classes\DataRecord\ImageDataRecordPDO')
+                ->disableOriginalConstructor()
+                ->getMock();
 
-        //Build object Instances.
+        //Set up the database instance methods.
+
+
+        //Build object instances and inject them.
         $this->ihp = new ImageHTMLParser();
         $this->ifm = new ImageFileManager();
         $this->io = new ImageObject();
         $this->ioc = new ImageObjectCollection();
         $this->imageHandler = new ImageHandler($this->ihp, $this->ifm, $this->io, $this->ioc, $this->idr);
+
     }
 
     public function testConvertImageTagsToCustomTags()
@@ -78,11 +77,18 @@ class ImageHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $this->db = NULL;
         $this->idr = NULL;
         $this->ihp = NULL;
         $this->ifm = NULL;
         $this->io = NULL;
         $this->ioc = NULL;
+    }
+}
+
+
+class PDOMock extends \PDO
+{
+    public function __construct()
+    {
     }
 }

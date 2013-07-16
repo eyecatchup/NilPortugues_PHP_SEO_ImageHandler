@@ -123,14 +123,23 @@ class ImageFileManager
             }
 
             if ($pos === false) {
-                //not external
-                return true;
+                //Looks external. Just make sure URL is valid.
+                if (($path_url[0] == $path_url[1]) && ($path_url[0] == '/')) {
+                    $path_url = 'http:' . $path_url;
+                }
+
+                if ((strpos($path_url, 'http://') !== false || strpos($path_url, 'https://') !== false) && filter_var($path_url, FILTER_VALIDATE_URL)) {
+                    return true;
+                } else {
+                    throw new \Exception("Value $path_url is not a valid external URL.");
+                }
             } else {
-                // external
+                //not external
                 return false;
             }
         }
 
+        //Local URL cases.
         $path_url = str_replace(array('http://', 'https://'), '', $path_url);
 
         //Case: //path/to/image.jpg
@@ -160,7 +169,7 @@ class ImageFileManager
             return false;
         }
 
-        //If still here, well, someone is really fucked up
+        //If still here, well, someone is really fucked up.
         throw new \Exception("Value $path_url is not a valid file path or URL.");
     }
 

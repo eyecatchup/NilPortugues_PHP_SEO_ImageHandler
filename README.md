@@ -17,13 +17,105 @@ This class is meant to be used both in the back-end and front-end of a site.
 
 
 ## Back-end Usage:
+```
+<?php
+
+require 'vendor/autoload.php';
+
+use \NilPortugues\SEO\ImageHandler\Classes\DataRecord\ImageDataRecordPDO as ImageDataRecordPDO;
+use \NilPortugues\SEO\ImageHandler\Classes\ImageHTMLParser as ImageHTMLParser;
+use \NilPortugues\SEO\ImageHandler\Classes\ImageFileManager as ImageFileManager;
+use \NilPortugues\SEO\ImageHandler\Classes\ImageObject as ImageObject;
+use \NilPortugues\SEO\ImageHandler\Classes\ImageObjectCollection as ImageObjectCollection;
+use \NilPortugues\SEO\ImageHandler\ImageHandler as ImageHandler;
+
+/***********************************************************************
+ * Set Up.
+ * It's up to you how to inject these values to the class.
+ *************************************************************************/
+//Set up the database connection
+$dns = 'mysql:dbname=sonrisaProject;host=localhost';
+$dbUsername = 'root';
+$dbPassword = 'root';
+$db = new \PDO($dns, $dbUsername, $dbPassword);
+
+//Set up the directory configuration + imageDomain
+$baseDir = './';
+$downloadDir = 'images/downloaded';
+$imageDomainPath = 'http://localhost/ImageHandlerClass';
+
+/***********************************************************************
+ * Object creation.
+ *************************************************************************/
+$idr = ImageDataRecordPDO::getInstance($db);
+$ihp = new ImageHTMLParser();
+$ifm = new ImageFileManager();
+$io = new ImageObject();
+$ioc = new ImageObjectCollection();
+$imageHandler = new ImageHandler($ihp, $ifm, $io, $ioc, $idr);
+
+//Process data.
+$processedHtml = $imageHandler->getParsedHtml($html, $baseDir, $downloadDir);
+
+```
+
+Under the hood, what's actually doing is:
+```
+<!-- $html will be transformed to $processedHtml -->
+<img src="http://example.com/path/to/image/directory/external-image.jpg" style="border:2px solid red" data-attribute="example1">
+
+<!-- $processedHtml -->
+{{IMG|6fd86da74659f04253285e853af26845|style="border:2px solid red"|data-attribute="example1"}}
+```
 
 ## Front-end Usage:
 
+The actual PHP code to use is the following:
+```
+<?php
+
+require 'vendor/autoload.php';
+
+use \NilPortugues\SEO\ImageHandler\Classes\DataRecord\ImageDataRecordPDO as ImageDataRecordPDO;
+use \NilPortugues\SEO\ImageHandler\Classes\ImageHTMLParser as ImageHTMLParser;
+use \NilPortugues\SEO\ImageHandler\Classes\ImageFileManager as ImageFileManager;
+use \NilPortugues\SEO\ImageHandler\Classes\ImageObject as ImageObject;
+use \NilPortugues\SEO\ImageHandler\Classes\ImageObjectCollection as ImageObjectCollection;
+use \NilPortugues\SEO\ImageHandler\ImageHandler as ImageHandler;
+
+/***********************************************************************
+ * Object creation.
+ *************************************************************************/
+$idr = ImageDataRecordPDO::getInstance($db);
+$ihp = new ImageHTMLParser();
+$ifm = new ImageFileManager();
+$io = new ImageObject();
+$ioc = new ImageObjectCollection();
+$imageHandler = new ImageHandler($ihp, $ifm, $io, $ioc, $idr);
+
+//Retrieve the processed HTML data from a data source. Eg: database
+
+//Rebuild the image tags.
+$recoveredHtml = $imageHandler->getHtml($processedHtml, $imageDomainPath);
+```
+Under the hood, what it is actually doing:
+```
+<!-- $processedHtml will be transformed to $recoveredHtml -->
+{{IMG|6fd86da74659f04253285e853af26845|style="border:2px solid red"|data-attribute="example1"}}
+
+<!-- $recoveredHtml -->
+<img src="//localhost/ImageHandlerClass/images/downloaded/6fd86da74659f04253285e853af26845.jpg" width="400" height="240" style="border:2px solid red" data-attribute="example1">
+```
+As you can notice, width and height attributes were added, but everything else is kept. This is for faster rendering times in the browser. If image is downscaled or upscaled, these values will match the scaled image dimensions.
+Image filename is horrible for SEO, but you can code your application code to rename image filename and `6fd86da74659f04253285e853af26845` will be whatever you want it to be.
 
 
 ## Todo:
 * Complete ImageHandlerTest.php
+* Add a Mock for the database in tests.
+* Add a method to check if the download directory exists
+* Add a method to check if the download directory is writable.
+* Add a method checking if current file has writing permittions.
 * Add proper documentation.
 
 

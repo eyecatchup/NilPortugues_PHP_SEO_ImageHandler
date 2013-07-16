@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler.png?branch=master)](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler)
-
 # NilPortugues\SEO\ImageHandler
 A PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database.
 

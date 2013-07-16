@@ -1,7 +1,7 @@
-## NilPortugues\SEO\ImageHandler
+# NilPortugues\SEO\ImageHandler
 A PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database.
 
-### Introduction
+## Introduction
 This class is meant to be used both in the back-end and front-end of a site.
  * **Back-end**
      * In the backend, this class should handle processing large chuncks of HTML input.
@@ -14,17 +14,17 @@ This class is meant to be used both in the back-end and front-end of a site.
  * **Front-end**
     * In the front-end, this class should be only used to replace the image placeholders for their valid HTML image tags equivalents.
 
-### Todo:
+## Todo:
 * Complete ImageHandlerTest.php
 * Add proper documentation.
 
 
-### Author
+## Author
 Nil Portugués Calderó
  - <contact@nilportugues.com>
  - http://nilportugues.com
 
-### License
+## License
 
  This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

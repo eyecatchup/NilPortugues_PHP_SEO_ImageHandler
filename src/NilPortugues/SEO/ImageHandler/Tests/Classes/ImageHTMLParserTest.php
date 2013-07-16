@@ -119,7 +119,6 @@ class ImageHTMLParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($result, '');
     }
 
-
     public function testGetAllInlineCssHeightValuesFromTag()
     {
         $testCase = 'border: 1px solid red; min-height: 64px; max-height: 96px; height: 72px';
@@ -130,9 +129,7 @@ class ImageHTMLParserTest extends \PHPUnit_Framework_TestCase
             'min' => '64px'
         );
 
-
         $result = $this->ImageHTMLParser->getCssHeight($testCase);
-
 
         $this->assertInternalType('array', $result);
         $this->assertEquals($expected, $result);
@@ -303,7 +300,6 @@ class ImageHTMLParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
-
     public function testRemoveCssHeightFromTheEndOfTheStyleTag()
     {
         $testCase = 'border:1px solid red; min-height: 32            px; height: 72px;';
@@ -334,7 +330,6 @@ class ImageHTMLParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
-
     public function testRemoveCssHeightFromTheStyleTagWhenHeightNotInIt()
     {
         $testCase = 'border:1px solid red; min-height: 32 px';
@@ -344,7 +339,6 @@ class ImageHTMLParserTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $result);
         $this->assertEquals($expected, $result);
     }
-
 
     public function tearDown()
     {

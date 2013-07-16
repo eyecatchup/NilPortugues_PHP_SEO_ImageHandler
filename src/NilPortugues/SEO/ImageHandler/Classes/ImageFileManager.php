@@ -81,6 +81,7 @@ class ImageFileManager
                 return $hash . '.' . $fileData['extension'];
             }
         }
+
         return false;
     }
 
@@ -183,6 +184,7 @@ class ImageFileManager
                 unset($path_list[$key]);
             }
         }
+
         return $path_list;
     }
 

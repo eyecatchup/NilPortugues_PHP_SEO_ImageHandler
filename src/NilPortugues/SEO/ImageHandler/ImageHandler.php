@@ -64,6 +64,7 @@ class ImageHandler
                 }
             }
         }
+
         return false;
     }
 
@@ -201,7 +202,6 @@ class ImageHandler
 
         return $this->replacePlaceholdersForComments($html, $commentData['placeholders']);
     }
-
 
     /**
      * This function replaces HTML comment tags to placeholders in order to guarantee
@@ -342,7 +342,6 @@ class ImageHandler
         $customTag = '{{IMG|' . $imageHash . $attrList . '}}';
         $customTag = preg_replace('/\s+/', ' ', $customTag);
         $html = str_replace($imageTag, $customTag, $html);
-
 
         return $html;
     }

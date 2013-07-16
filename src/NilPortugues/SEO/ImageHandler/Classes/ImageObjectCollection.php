@@ -42,12 +42,12 @@ class ImageObjectCollection
     {
         if (!empty($this->objectArray[$key])) {
             unset($this->objectArray[$key]);
+
             return $this;
         }
 
         throw new \Exception("The $key key does not exist in the current instance of ImageObjectCollection.");
     }
-
 
     /**
      * @param $id
@@ -75,6 +75,7 @@ class ImageObjectCollection
                 $this->objectArray[$newKey] = $this->objectArray[$currentKey];
                 unset($this->objectArray[$currentKey]);
             }
+
             return $this;
 
         } else {

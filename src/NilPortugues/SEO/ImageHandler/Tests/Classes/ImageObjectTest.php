@@ -1,7 +1,6 @@
 <?php
 namespace NilPortugues\SEO\ImageHandler\Tests\Classes;
 
-
 class ImageObjectTest extends \PHPUnit_Framework_TestCase
 {
     protected $ImageObject;
@@ -51,7 +50,6 @@ class ImageObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $result);
         $this->assertEquals(array($expected), $result);
     }
-
 
     public function tearDown()
     {

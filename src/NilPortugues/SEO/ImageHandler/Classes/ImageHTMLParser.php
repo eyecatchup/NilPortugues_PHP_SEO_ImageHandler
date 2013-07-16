@@ -31,6 +31,7 @@ class ImageHTMLParser
                 return $images;
             }
         }
+
         return array();
     }
 
@@ -52,6 +53,7 @@ class ImageHTMLParser
                 }
             }
         }
+
         return '';
     }
 
@@ -89,6 +91,7 @@ class ImageHTMLParser
                 return array('max' => $max, 'normal' => $normal, 'min' => $min);
             }
         }
+
         return array('max' => 0, 'normal' => 0, 'min' => 0);
     }
 
@@ -96,7 +99,7 @@ class ImageHTMLParser
      * @param $inlineCss
      * @return array
      */
-    function getCssHeight($inlineCss)
+    public function getCssHeight($inlineCss)
     {
         return $this->getCssDimensions($inlineCss, 'height');
     }
@@ -105,7 +108,7 @@ class ImageHTMLParser
      * @param $inlineCss
      * @return array
      */
-    function getCssWidth($inlineCss)
+    public function getCssWidth($inlineCss)
     {
         return $this->getCssDimensions($inlineCss, 'width');
     }
@@ -134,6 +137,7 @@ class ImageHTMLParser
                 }
             }
         }
+
         return $result;
     }
 
@@ -171,9 +175,11 @@ class ImageHTMLParser
                         }
                     }
                 }
+
                 return $inlineCss;
             }
         }
+
         return '';
     }
 
@@ -181,7 +187,7 @@ class ImageHTMLParser
      * @param $inlineCss
      * @return string
      */
-    function removeCssWidth($inlineCss)
+    public function removeCssWidth($inlineCss)
     {
         return $this->removeCssValue($inlineCss, 'width');
     }
@@ -190,7 +196,7 @@ class ImageHTMLParser
      * @param $inlineCss
      * @return string
      */
-    function removeCssHeight($inlineCss)
+    public function removeCssHeight($inlineCss)
     {
         return $this->removeCssValue($inlineCss, 'height');
     }

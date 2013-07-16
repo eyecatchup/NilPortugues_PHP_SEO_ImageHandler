@@ -33,7 +33,6 @@ $ioc = new ImageObjectCollection();
 //Instantiation of ImageHandler
 $imageHandler = new ImageHandler($ihp, $ifm, $io, $ioc, $idr);
 
-
 /***********************************************************************
  * Usage
  *************************************************************************/

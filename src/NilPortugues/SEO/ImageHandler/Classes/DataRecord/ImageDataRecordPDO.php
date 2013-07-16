@@ -28,7 +28,7 @@ class ImageDataRecordPDO implements \NilPortugues\SEO\ImageHandler\Interfaces\Im
     /**
      * The Singleton method. Retrieves the static object instance.
      *
-     * @param \PDO $pdo
+     * @param  \PDO  $pdo
      * @return mixed
      */
     public static function getInstance(\PDO $pdo)
@@ -43,7 +43,7 @@ class ImageDataRecordPDO implements \NilPortugues\SEO\ImageHandler\Interfaces\Im
 
 
     /**
-     * @param \NilPortugues\SEO\ImageHandler\Classes\ImageObject $obj
+     * @param  \NilPortugues\SEO\ImageHandler\Classes\ImageObject $obj
      * @return bool|mixed
      */
     public function insertImageObject(\NilPortugues\SEO\ImageHandler\Classes\ImageObject $obj)
@@ -87,7 +87,7 @@ class ImageDataRecordPDO implements \NilPortugues\SEO\ImageHandler\Interfaces\Im
     }
 
     /**
-     * @param array $values
+     * @param  array $values
      * @return mixed
      */
     public function getExistingImageHashes($values = array())
@@ -120,6 +120,7 @@ class ImageDataRecordPDO implements \NilPortugues\SEO\ImageHandler\Interfaces\Im
 
             return $data;
         }
+
         return false;
     }
 }

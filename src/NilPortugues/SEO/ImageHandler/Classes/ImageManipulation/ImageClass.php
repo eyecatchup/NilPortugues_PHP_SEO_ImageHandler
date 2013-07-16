@@ -39,6 +39,7 @@ class ImageClass
         } else {
             throw new \Exception('File ' . $filename . ' is not a supported file type. JPEG/PNG/GIF only.');
         }
+
         return $this;
     }
 
@@ -53,6 +54,7 @@ class ImageClass
     public function getWidth()
     {
         $image = $this->getWorkingResource();
+
         return imagesx($image);
     }
 
@@ -62,6 +64,7 @@ class ImageClass
     public function getHeight()
     {
         $image = $this->getWorkingResource();
+
         return imagesy($image);
     }
 
@@ -74,6 +77,7 @@ class ImageClass
         if (!isset($this->current_image)) {
             $this->current_image = $this->original_image;
         }
+
         return $this->current_image;
     }
 
@@ -83,7 +87,7 @@ class ImageClass
      *
      * @param $newWidth
      * @param $newHeight
-     * @param string $option
+     * @param  string     $option
      * @return imageClass
      */
     public function resize($newWidth, $newHeight, $option = "auto")
@@ -117,6 +121,7 @@ class ImageClass
             $this->cropResize($optimal_width, $optimal_height, $newWidth, $newHeight);
 
         }
+
         return $this;
     }
 
@@ -138,16 +143,19 @@ class ImageClass
             case 'image/jpg':
             case 'image/jpeg':
                 $this->filetype = 'jpg';
+
                 return true;
                 break;
 
             case 'image/png':
                 $this->filetype = 'png';
+
                 return true;
                 break;
 
             case 'image/gif':
                 $this->filetype = 'gif';
+
                 return true;
                 break;
 
@@ -161,14 +169,14 @@ class ImageClass
      * Reads the image's color palette and returns an array with HEX code for them.
      * $numColors determines the number of colors and total number of results.
      *
-     * @param int $numColors
+     * @param  int        $numColors
      * @return array
      * @throws \Exception
      */
     public function getPalette($numColors)
     {
 
-        $numColors = (int)$numColors;
+        $numColors = (int) $numColors;
         $this->original_image = $this->imageCreate($this->filename);
         $this->width = imagesx($this->original_image);
         $this->height = imagesy($this->original_image);
@@ -196,9 +204,9 @@ class ImageClass
             }
         }
         arsort($colors);
+
         return array_slice(array_keys($colors), 0, $numColors);
     }
-
 
     /**
      * Returns an image resource for PNG,JPG or GIF image files.
@@ -221,6 +229,7 @@ class ImageClass
                 $img = imagecreatefrompng($filename);
                 break;
         }
+
         return $img;
     }
 
@@ -265,6 +274,7 @@ class ImageClass
                 break;
 
         }
+
         return array('optimal_width' => $optimal_width, 'optimal_height' => $optimal_height);
     }
 
@@ -278,6 +288,7 @@ class ImageClass
     {
         $ratio = $this->width / $this->height;
         $newWidth = $newHeight * $ratio;
+
         return $newWidth;
     }
 
@@ -291,6 +302,7 @@ class ImageClass
     {
         $ratio = $this->height / $this->width;
         $newHeight = $newWidth * $ratio;
+
         return $newHeight;
     }
 
@@ -321,7 +333,7 @@ class ImageClass
             if ($newHeight < $newWidth) {
                 $optimal_width = $newWidth;
                 $optimal_height = $this->getSizeByFixedWidth($newWidth);
-            } else if ($newHeight > $newWidth) {
+            } elseif ($newHeight > $newWidth) {
                 $optimal_width = $this->getSizeByFixedHeight($newHeight);
                 $optimal_height = $newHeight;
             } else {
@@ -330,6 +342,7 @@ class ImageClass
                 $optimal_height = $newHeight;
             }
         }
+
         return array('optimal_width' => $optimal_width, 'optimal_height' => $optimal_height);
     }
 
@@ -456,7 +469,7 @@ class ImageClass
      * @param $savePath
      * @param $filename
      * @param $extension
-     * @param int|string $imageQuality
+     * @param  int|string  $imageQuality
      * @return bool|string
      */
     public function save($savePath, $filename, $extension, $imageQuality = 100)
@@ -499,9 +512,9 @@ class ImageClass
         }
         //destroy image resource
         imagedestroy($this->current_image);
+
         return $path;
     }
-
 
     /**
      * Allows an image to be converted into another format.
@@ -526,9 +539,9 @@ class ImageClass
             //does the actual conversion
             $this->resize($width, $height, 'exact');
         }
+
         return $this;
     }
-
 
     /**
      * Thanks to ZeBadger for original example, and Davide Gualano for pointing me to it
@@ -561,6 +574,7 @@ class ImageClass
                 }
             }
         }
+
         return $frames > 1;
     }
 
@@ -622,7 +636,6 @@ class ImageClass
         imagecopy($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
     }
 
-
     /**
      * Function that puts a watermark on any image. Rescales watermark to fit into the image.
      *
@@ -631,7 +644,7 @@ class ImageClass
      * @param int $margin
      * @param $x_position
      * @param $y_position
-     * @param int $ratio_correction Allows correction on the auto-scaling of the watermark, in case it's needed.
+     * @param  int        $ratio_correction Allows correction on the auto-scaling of the watermark, in case it's needed.
      * @return imageClass
      */
     public function watermark($filename, $opacity, $margin = 0, $x_position = '', $y_position = '', $ratio_correction = 1)
@@ -785,7 +798,7 @@ class ImageClass
     }
 
     /**
-     * @param string $action
+     * @param  string     $action
      * @return imageClass
      */
     public function flip($action = 'horizontal')
@@ -838,6 +851,7 @@ class ImageClass
         }
 
         $this->current_image = $flipped;
+
         return $this;
     }
 
@@ -847,10 +861,10 @@ class ImageClass
      * The GD native filters use the expected parameters values.
      *
      * @param $name
-     * @param null $arg1
-     * @param null $arg2
-     * @param null $arg3
-     * @param null $arg4
+     * @param  null       $arg1
+     * @param  null       $arg2
+     * @param  null       $arg3
+     * @param  null       $arg4
      * @return imageClass
      * @throws \Exception
      */
@@ -957,9 +971,9 @@ class ImageClass
         if ($this->filetype == 'png' || $this->filetype == 'gif') {
             $this->backgroundColor($this->current_image, 'transparent');
         }
+
         return $this;
     }
-
 
     /**
      * Does the sepia image effect
@@ -1004,6 +1018,7 @@ class ImageClass
                 }
             }
         }
+
         return $image;
     }
 

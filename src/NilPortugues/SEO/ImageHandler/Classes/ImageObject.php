@@ -48,6 +48,7 @@ class ImageObject
                 $this->data['other_appearances'][] = $value;
             }
         }
+
         return $this;
     }
 

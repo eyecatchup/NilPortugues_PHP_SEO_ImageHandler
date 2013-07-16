@@ -189,7 +189,6 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
         unset($_SERVER['HTTP_HOST']);
     }
 
-
     public function testGetExternalFilesImagesHavingLocalDataInArray()
     {
         $_SERVER['HTTP_HOST'] = 'mydomain.com';
@@ -301,7 +300,6 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
         $expectedWidth = '125%';
         $expectedHeight = '';
 
-
         $result = $this->ImageFileManager->normalizeImageDimension($realWidth, $realHeight, $currentWidth, $currentHeight);
 
         $this->assertEquals($expectedHeight, $result['height']);
@@ -318,7 +316,6 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
 
         $expectedWidth = '';
         $expectedHeight = '25%';
-
 
         $result = $this->ImageFileManager->normalizeImageDimension($realWidth, $realHeight, $currentWidth, $currentHeight);
 

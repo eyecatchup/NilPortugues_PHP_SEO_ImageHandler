@@ -7,6 +7,7 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $_SERVER['HTTP_HOST'] = 'mydomain.com';
         $this->ImageFileManager = new \NilPortugues\SEO\ImageHandler\Classes\ImageFileManager();
     }
 
@@ -80,22 +81,18 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testUrlIsExternalPath()
     {
-        $_SERVER['HTTP_HOST'] = 'mydomain.com';
         $path_url = 'http://google.es/image.jpg';
         $result = $this->ImageFileManager->checkExternal($path_url);
         $this->assertInternalType('boolean', $result);
         $this->assertTrue($result);
-        unset($_SERVER['HTTP_HOST']);
     }
 
     public function testUrlIsExternalPathButBelongsToOurDomain()
     {
-        $_SERVER['HTTP_HOST'] = 'mydomain.com';
         $path_url = 'http://static.mydomain.com/image.jpg';
         $result = $this->ImageFileManager->checkExternal($path_url);
         $this->assertInternalType('boolean', $result);
         $this->assertFalse($result);
-        unset($_SERVER['HTTP_HOST']);
     }
 
     public function testAbsoluteUrlIsExternalPath()
@@ -179,19 +176,16 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetExternalFilesImagesHavingEmptyArray()
     {
-        $_SERVER['HTTP_HOST'] = 'mydomain.com';
         $testCase = array();
         $expected = array();
 
         $result = $this->ImageFileManager->getExternalFiles($testCase);
         $this->assertEquals($result, $expected);
         $this->assertCount(0, $result);
-        unset($_SERVER['HTTP_HOST']);
     }
 
     public function testGetExternalFilesImagesHavingLocalDataInArray()
     {
-        $_SERVER['HTTP_HOST'] = 'mydomain.com';
         $testCase = array
         (
             'http://mydomain.com/image1.jpg',
@@ -205,12 +199,10 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
         $result = $this->ImageFileManager->getExternalFiles($testCase);
         $this->assertEquals($result, $expected);
         $this->assertCount(0, $result);
-        unset($_SERVER['HTTP_HOST']);
     }
 
     public function testGetExternalFilesImagesHavingExternalDataInArray()
     {
-        $_SERVER['HTTP_HOST'] = 'mydomain.com';
         $testCase = array
         (
             'http://google.es/image.jpg',
@@ -228,7 +220,6 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
         $result = $this->ImageFileManager->getExternalFiles($testCase);
         $this->assertEquals($expected, $result);
         $this->assertContainsOnly('string', $result);
-        unset($_SERVER['HTTP_HOST']);
     }
 
     public function testDownloadExistingImageToExistentDirectory()
@@ -357,7 +348,6 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetExternalFilesImagesHavingExternalDataInArray2()
     {
-        $_SERVER['HTTP_HOST'] = 'mydomain.com';
         $testCase = array
         (
             'http://www.pokemonxy.com/_ui/img/_en/screenshots/june_new_p11_01.jpg',
@@ -371,11 +361,11 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
         $result = $this->ImageFileManager->getExternalFiles($testCase);
         $this->assertEquals($expected, $result);
         $this->assertContainsOnly('string', $result);
-        unset($_SERVER['HTTP_HOST']);
     }
 
     public function tearDown()
     {
         $this->ImageFileManager = NULL;
+        unset($_SERVER['HTTP_HOST']);
     }
 }

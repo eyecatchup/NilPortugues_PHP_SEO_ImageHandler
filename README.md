@@ -110,7 +110,7 @@ As you can notice, width and height attributes were added, but everything else i
 
 If title and alt attributes are provided by the image storage source, the class will also create them when processing `$processedHtml` to `$recoveredHtml`, which is really good for SEO.
 
-Image filename on the other hand, is *horrible for SEO*, but you can code your application code to rename image filename and `6fd86da74659f04253285e853af26845.jpg` will be whatever you want it to be.
+Image filename on the other hand, is *horrible for SEO*, but you can code your application to allow renaming image file names and let `6fd86da74659f04253285e853af26845.jpg` be whatever you want it to be.
 
 
 ## Todo:

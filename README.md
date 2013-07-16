@@ -1,6 +1,10 @@
-##Todo:
+## NilPortugues\SEO\ImageHandler
+A PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database.
+
+### Todo:
 * Complete ImageHandlerTest.php
 * Add proper documentation.
+
 
 ### Author
 Nil Portugués Calderó

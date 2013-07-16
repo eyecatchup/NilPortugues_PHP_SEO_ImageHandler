@@ -95,82 +95,86 @@ class ImageFileManager
      */
     public function checkExternal($path_url)
     {
-        //Case: http://mydomain.com/path/to/image.jpg OR http://externaldomain.com/path/to/image.jpg
         $url = parse_url($path_url);
-        if (!empty($url['host'])) {
+        if (empty($url['host'])) {
+            $url = array('host' => '');
+        }
 
-            $ourDomain = 'http://' . $_SERVER['HTTP_HOST'] . '/';
-            $ourDomain = parse_url($ourDomain);
-            $ourDomain = $ourDomain['host'];
+        if (!empty($url['scheme']) && $url['scheme'] != 'http' && $url['scheme'] != 'https') {
+            throw new \Exception("Value " . $url['scheme'] . " is not a valid scheme.");
+        }
 
-            $url['host'] = strtolower($url['host']);
+        $cases = array
+        (
+            //Not external patterns
+            '/' => ($path_url[0] == '/' && $path_url[1] != '/') ? true : false,
+            './' => ($path_url[0] == '.' && $path_url[1] == '/') ? true : false,
 
-            if (strpos('www.', $url['host'])) {
-                $url['host'] = str_replace('www.', '', $url['host']);
+            //Could be neither
+            '//' =>
+            (
+                $path_url[0] == $path_url[1]
+                    && $path_url[0] == '/'
+                    && filter_var('http:' . $path_url, FILTER_VALIDATE_URL) != false
+            ) ? true : false,
+
+        );
+
+        if ($cases['/']) {
+            //is not external
+            return false;
+        } elseif ($cases['./']) {
+            //is not external
+            return false;
+        } else {
+            //Try comparing the domain names.
+            $ourDomain = parse_url('http://' . $_SERVER['HTTP_HOST'] . '/');
+            $ourDomain = strtolower($ourDomain['host']);
+            $externalDomain = strtolower($url['host']);
+
+
+            if (strpos($ourDomain, 'www.') !== false) {
+                $ourDomain = str_replace('www.', '', $ourDomain);
             }
 
-            if ($url['host'] == $ourDomain) {
-                //not external
-                return false;
+            if (strpos($externalDomain, 'www.') !== false) {
+                $externalDomain = str_replace('www.', '', $externalDomain);
             }
 
-            $haystack = $url['host'];
-            $needle = $ourDomain;
-            if (strlen($haystack) > strlen($needle)) {
-                $pos = strpos($haystack, $needle);
-            } else {
-                $pos = strpos($needle, $haystack);
-            }
-
-            if ($pos === false) {
-                //Looks external. Just make sure URL is valid.
-                if (($path_url[0] == $path_url[1]) && ($path_url[0] == '/')) {
-                    $path_url = 'http:' . $path_url;
-                }
-
-                if ((strpos($path_url, 'http://') !== false || strpos($path_url, 'https://') !== false) && filter_var($path_url, FILTER_VALIDATE_URL)) {
-                    return true;
+            //Case: //external.com/path/to/image instead of http://external.com/path/to/image,
+            if ($cases['//']) {
+                if ($ourDomain != $externalDomain) {
+                    return false;
                 } else {
-                    throw new \Exception("Value $path_url is not a valid external URL.");
+                    return true;
                 }
             } else {
-                //not external
-                return false;
+                $haystack = $externalDomain;
+                $needle = $ourDomain;
+
+                if (!empty($needle) && !empty($haystack)) {
+                    if (strlen($haystack) > strlen($needle)) {
+                        $pos = strpos($haystack, $needle);
+                    } else {
+                        $pos = strpos($needle, $haystack);
+                    }
+
+                    if ($pos === false) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    //Case: path/to/image.jpg
+                    $trailCount = substr_count($path_url, '/');
+                    $pathPartsCount = count(explode('/', $path_url));
+
+                    if ($trailCount == ($pathPartsCount - 1)) {
+                        return false;
+                    }
+                }
             }
         }
-
-        //Local URL cases.
-        $path_url = str_replace(array('http://', 'https://'), '', $path_url);
-
-        //Case: //path/to/image.jpg
-        if (($path_url[0] == $path_url[1]) && ($path_url[0] == '/')) {
-
-            //not external
-            return false;
-        }
-
-        //Case: /path/to/image.jpg
-        if ($path_url[0] == '/') {
-            //not external
-            return false;
-        }
-
-        //Case: ./path/to/image.jpg
-        if ($path_url[0] == '.' && $path_url[1] == '/') {
-            //not external
-            return false;
-        }
-
-        //Case: path/to/image.jpg
-        $trailCount = substr_count($path_url, '/');
-        $pathPartsCount = count(explode('/', $path_url));
-
-        if ($trailCount == ($pathPartsCount - 1)) {
-            return false;
-        }
-
-        //If still here, well, someone is really fucked up.
-        throw new \Exception("Value $path_url is not a valid file path or URL.");
     }
 
 

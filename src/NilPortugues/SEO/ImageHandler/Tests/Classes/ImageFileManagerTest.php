@@ -368,4 +368,5 @@ class ImageFileManagerTest extends \PHPUnit_Framework_TestCase
         $this->ImageFileManager = NULL;
         unset($_SERVER['HTTP_HOST']);
     }
+
 }

@@ -185,7 +185,7 @@ class ImageFileManager
         foreach ($path_list as $key => $file) {
 
             try {
-                if (!$this->checkExternal($file)) {
+                if ($this->checkExternal($file) === false) {
                     unset($path_list[$key]);
                 }
             } catch (\Exception $e) {

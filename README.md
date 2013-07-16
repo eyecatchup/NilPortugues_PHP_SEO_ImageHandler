@@ -107,7 +107,10 @@ Under the hood, what it is actually doing:
 <img src="//localhost/ImageHandlerClass/images/downloaded/6fd86da74659f04253285e853af26845.jpg" width="400" height="240" style="border:2px solid red" data-attribute="example1">
 ```
 As you can notice, width and height attributes were added, but everything else is kept. This is for faster rendering times in the browser. If image is downscaled or upscaled, these values will match the scaled image dimensions.
-Image filename is horrible for SEO, but you can code your application code to rename image filename and `6fd86da74659f04253285e853af26845` will be whatever you want it to be.
+
+If title and alt attributes are provided by the image storage source, the class will also create them when processing `$processedHtml` to `$recoveredHtml`, which is really good for SEO.
+
+Image filename on the other hand, is *horrible for SEO*, but you can code your application code to rename image filename and `6fd86da74659f04253285e853af26845.jpg` will be whatever you want it to be.
 
 
 ## Todo:

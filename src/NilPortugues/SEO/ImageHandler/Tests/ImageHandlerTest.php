@@ -35,7 +35,6 @@ class ImageHandlerTest extends \PHPUnit_Framework_TestCase
 
         //Set up the database instance methods.
 
-
         //Build object instances and inject them.
         $this->ihp = new ImageHTMLParser();
         $this->ifm = new ImageFileManager();
@@ -84,7 +83,6 @@ class ImageHandlerTest extends \PHPUnit_Framework_TestCase
         $this->ioc = NULL;
     }
 }
-
 
 class PDOMock extends \PDO
 {

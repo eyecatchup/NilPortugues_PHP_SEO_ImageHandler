@@ -223,6 +223,10 @@ class ImageObject
         return $this;
     }
 
+    /**
+     * @param $value
+     * @return ImageObject
+     */
     public function setParentHash($value)
     {
         $this->data['parent_file_md5'] = $value;
@@ -230,6 +234,9 @@ class ImageObject
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getParentHash()
     {
         return $this->data['parent_file_md5'];

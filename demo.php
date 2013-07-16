@@ -33,11 +33,6 @@ $ioc = new ImageObjectCollection();
 //Instantiation of ImageHandler
 $imageHandler = new ImageHandler($ihp, $ifm, $io, $ioc, $idr);
 
-$a = $ifm->checkExternal('smb://static.mydomain.com/image.jpg');
-
-var_dump($a);
-die();
-
 /***********************************************************************
  * Usage
  *************************************************************************/

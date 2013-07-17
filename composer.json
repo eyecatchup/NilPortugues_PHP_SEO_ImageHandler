@@ -1,5 +1,5 @@
 {
-    "name":"nilportugues/seo/imagehandler",
+    "name":"nilportugues/seo-imagehandler",
     "description":"A PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database.",
     "type":"library",
     "keywords":["seo", "search engine optimization", "image processing"],

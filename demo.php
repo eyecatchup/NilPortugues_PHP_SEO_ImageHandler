@@ -40,40 +40,42 @@ $html = <<<HTML
     <p>Images with height or width not matching the original source image will be resized and created as a new image.</p>
 
     <!-- Image in comment tags shouldn't be stripped or processed. Simply ignored.
-    <img src="http://www.pokemonxy.com/_ui/img/_en/screenshots/june_new_p11_01.jpg">
+    <img src="https://www.google.com/images/srpr/logo3w.png">
     <img src="http://www.pokemonxy.com/_ui/img/_en/screenshots/jAune_new_p11_01.jpg">
     -->
 
     <!-- BASIC CASES -->
-    <img src="http://www.pokemonxy.com/_ui/img/_en/screenshots/june_new_p11_01.jpg">
-    <img src="http://www.pokemonxy.com/_ui/img/_en/screenshots/june_new_p11_01.jpg">
-    <img src="http://www.pokemonxy.com/_ui/img/_en/screenshots/june_new_p11_01.jpg" style="width:300px;height:600px;border-radius: 6px;">
-    <img src="http://www.pokemonxy.com/_ui/img/_en/screenshots/june_new_p11_01.jpg" style="border-radius: 6px;height:100px;">
-    <img src="http://www.pokemonxy.com/_ui/img/_en/screenshots/june_new_p11_01.jpg" style="border-radius: 6px;width:100px;">
-    <img src="./images/m2x.png" data-attribute="example1" style="">
-    <img src="./images/m2x.png" data-attribute="example1" style="height:500px">
-
+    <img src="https://www.google.com/images/srpr/logo3w.png">
+    <img src="https://www.google.com/images/srpr/logo3w.png">
+    <br>
+    <img src="https://www.google.com/images/srpr/logo3w.png" style="width:320px;height:60px;border-radius: 6px;">
+    <img src="https://www.google.com/images/srpr/logo3w.png" style="border-radius: 6px;height:50px;">
+    <br>
+    <img src="https://www.google.com/images/srpr/logo3w.png" style="border-radius: 6px;width:150px;">
+    <img src="./images/ubuntu-logo14.png" data-attribute="example1" style="">
+    <br>
+    <img src="./images/ubuntu-logo14.png" data-attribute="example1" style="height:65px">
     <!-- THIS IMAGE DOES NOT EXIST -->
     <img src="http://google.com/image/does/not/exist.jpg">
-
+    <br>
     <!-- SPECIAL CASE 1: HEIGHT OR WIDTH ATTR SHOULD BE USED IF NO WIDTH OR HEIGHT ARE DEFINED IN THE STYLE ATTRIBUTE-->
-    <img src="./images/m2x.png" data-attribute="example1" width="150" style="">
-
+    <img src="./images/ubuntu-logo14.png" data-attribute="example1" width="80" style="">
     <!-- SPECIAL CASE 2: DUPLICATE WIDTH OR HEIGHT WILL BE REMOVED. CSS VALUE WILL BE USED AS THEY HAVE PRIORITY OVER ATTRIBUTE VALUES. -->
-    <img src="./images/m2x.png" data-attribute="example1" width="150" style="width:200px">
-    <img src="./images/m2x.png" data-attribute="example1" height="150" style="height:200px">
-
+    <img src="./images/ubuntu-logo14.png" data-attribute="example1" width="80" style="width:115px">
+    <br>
+    <img src="./images/ubuntu-logo14.png" data-attribute="example1" height="80" style="height:75px">
     <!-- SPECIAL CASE 3: WIDTH ATTR. WILL BE REMOVED. CSS VALUE WILL BE USED AS THEY HAVE PRIORITY OVER ATTRIBUTE VALUES.  -->
-    <img src="./images/m2x.png" data-attribute="example1" width="50%" style="WIDTH:20%; border:2px solid red">
-    <img src="./images/m2x.png" data-attribute="example1" width="50%" style="WIDTH:250px; border:2px solid red">
-    <img src="./images/m2x.png" data-attribute="example1" width="396" height="636" style="WIDTH:50%; border:2px solid red">
-
+    <img src="./images/ubuntu-logo14.png" data-attribute="example1" width="50%" style="WIDTH:20%; border:2px solid red">
+    <br>
+    <img src="./images/ubuntu-logo14.png" data-attribute="example1" width="50%" style="WIDTH:50px; border:2px solid red">
+    <img src="./images/ubuntu-logo14.png" data-attribute="example1" width="396" height="636" style="WIDTH:25%; border:2px solid red">
+    <br>
     <!-- SPECIAL CASE 4: PERCENTAGES IMAGES MUST BE IGNORED. IMAGE SIZE WILL DEPEND ON THE IMAGE WRAPPER ELEMENT -->
-    <img src="http://www.pokemonxy.com/_ui/img/_en/screenshots/june_new_p11_01.jpg" style="border-radius: 6px;height:33%;; border:2px solid red">
-    <img src="http://www.pokemonxy.com/_ui/img/_en/screenshots/june_new_p11_01.jpg" style="border-radius: 6px;width:33%;; border:2px solid red">
-
+    <img src="https://www.google.com/images/srpr/logo3w.png" style="border-radius: 6px;height:33%;; border:2px solid red">
+    <img src="https://www.google.com/images/srpr/logo3w.png" style="border-radius: 6px;width:33%;; border:2px solid red">
+    <br>
     <!-- SPECIAL CASE 5: HEIGHT VALUE SHOULD BE KEPT IF PRESENT. PUT IT INSIDE STYLE SO IT DOESN'T GET REMOVED. -->
-    <img src="./images/m2x.png" data-attribute="example1" width="396" height="636" style="WIDTH:50%; border:2px solid red">
+    <img src="./images/ubuntu-logo14.png" data-attribute="example1" width="396" height="636" style="WIDTH:25%; border:2px solid red">
 
 HTML;
 
@@ -81,8 +83,9 @@ $newHtml = $imageHandler->getParsedHtml($html, $baseDir, $downloadDir);
 $recoveredHtml = $imageHandler->getHtml($newHtml, $imageDomainPath);
 
 echo "<h1>Original</h1>\n";
-echo $html;
 echo '<textarea style="width:100%; height:300px">' . $html . '</textarea>';
+echo "\n";
+echo $html;
 echo "\n\n\n\n\n";
 
 echo "<h1>Processed</h1>\n";

@@ -7,7 +7,7 @@ The main reasons you would do this are **SEO** and saving up disk space.
 
 ## 2. Demonstration
 
-(Coming soon)
+http://nilportugues.com/opensource/php-seo-imagehandler/
 
 ## 3. How it works
 This class is meant to be used both in the back-end and front-end of a site.

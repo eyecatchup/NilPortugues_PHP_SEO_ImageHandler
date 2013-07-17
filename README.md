@@ -1,7 +1,9 @@
-# [![Build Status](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler.png?branch=master)](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler) NilPortugues\SEO\ImageHandler
-A PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database.
+# NilPortugues\SEO\ImageHandler  [![Build Status](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler.png?branch=master)](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler)
 
-## Introduction
+## Purpose
+This PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database, creating a abstraction layer that allows the user handle its web application images. The main reason you would do this is SEO.
+
+## How it works
 This class is meant to be used both in the back-end and front-end of a site.
  * **Back-end**
      * In the backend, this class should handle processing large chuncks of HTML input.
@@ -14,15 +16,15 @@ This class is meant to be used both in the back-end and front-end of a site.
  * **Front-end**
     * In the front-end, this class should be only used to replace the image placeholders for their valid HTML image tags equivalents.
 
-## Data Record or Database
+## Data Structures or Databases
 There's no need to use MySQL, and any other database (PostgreSQL, MariaDB,...) or storage system (Redis, flat files...) can be used.
 
 Choose your data record technology by implementing an class implementing the `ImageDataRecordInterface.php` methods. Using this interface, it will allow you to use ORMs such as Doctrine2.
 
 By default, this class includes a SQL (MySQL) database structure to be used with this code. This file can be found at `src/NilPortugues/SEO/ImageHandler/Resources/ImageTable.sql`.
 
-## Usage
-### Back-end Usage
+## Code Usage
+### Back-end
 ```
 <?php
 
@@ -74,7 +76,7 @@ Under the hood, what's actually doing is:
 {{IMG|6fd86da74659f04253285e853af26845|style="border:2px solid red"|data-attribute="example1"}}
 ```
 
-### Front-end Usage
+### Front-end
 
 The actual PHP code to use is the following:
 ```
@@ -112,12 +114,13 @@ Under the hood, what it is actually doing:
 <!-- $recoveredHtml -->
 <img src="//localhost/ImageHandlerClass/images/downloaded/6fd86da74659f04253285e853af26845.jpg" width="400" height="240" style="border:2px solid red" data-attribute="example1">
 ```
-As you can notice, width and height attributes were added, but everything else is kept. This is for faster rendering times in the browser. If image is downscaled or upscaled, these values will match the scaled image dimensions.
+Image file name is **terrible** for SEO purposes. The reason behind this name is that the file name it's actually the file's md5 file hash. This is used to assure there's no image being overridden or repeated in our image directory.
 
-If title and alt attributes are provided by the image storage source, the class will also create them when processing `$processedHtml` to `$recoveredHtml`, which is really good for SEO.
+If the image file name concerns you, which should, you should build in your application file renaming and let `6fd86da74659f04253285e853af26845.jpg` be whatever you want it to be to meet your SEO purposes.
 
-Image filename on the other hand, is *horrible for SEO*, but you can code your application to allow renaming image file names and let `6fd86da74659f04253285e853af26845.jpg` be whatever you want it to be.
+Finally, if **title** and **alt** attributes are provided - whether these were extracted values or entered by an application into the data record row- the class will also create and populate them when processing `$processedHtml` to `$recoveredHtml`, which is really good for SEO.
 
+As a bonus, when rebuilding the image tags, **width** and **height** attributes are added. While there's no real SEO benefits on doing this, it will cope for faster rendering times in the browser. If image was down-scaled or up-scaled, these values will match the scaled image dimensions.
 
 ## Todo:
 * Add a method to check if the download directory exists

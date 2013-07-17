@@ -1,6 +1,6 @@
 {
     "name":"nilportugues/seo-imagehandler",
-    "description":"A PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database.",
+    "description":"This PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database, creating an abstraction layer that allows the user handle its web application images. The main reasons you would do this are saving up disk space and SEO.",
     "type":"library",
     "keywords":["seo", "search engine optimization", "image processing"],
     "homepage":"https://github.com/nilopc/NilPortugues_PHP_SEO_ImageHandler",

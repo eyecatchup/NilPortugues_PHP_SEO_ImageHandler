@@ -366,11 +366,15 @@ class ImageHandler
     protected function saveImages($html, $baseDir, $imageDir)
     {
         if (!$this->fileManager->existsDir($baseDir)) {
-            throw new \Exception("The specified $baseDir directory does not exist.");
+            throw new \Exception("The specified directory: $baseDir, does not exist.");
         }
 
         if (!$this->fileManager->existsDir($baseDir . '/' . $imageDir)) {
-            throw new \Exception("The specified $baseDir.'/'.$imageDir directory does not exist.");
+            throw new \Exception("The specified directory: $baseDir/$imageDir, does not exist.");
+        }
+
+        if (!is_writable($baseDir . '/' . $imageDir)) {
+            throw new \Exception("The specified directory: $baseDir/$imageDir, is not writable.");
         }
 
         //STEP 1 - GET ALL IMAGE  FILE PATHS

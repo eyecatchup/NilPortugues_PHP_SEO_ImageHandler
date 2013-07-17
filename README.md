@@ -7,6 +7,8 @@ The main reasons you would do this are **SEO** and saving up disk space.
 
 ## 2. Demonstration
 
+(Coming soon)
+
 ## 3. How it works
 This class is meant to be used both in the back-end and front-end of a site.
  * **Back-end**
@@ -131,12 +133,7 @@ Finally, if **title** and **alt** attributes are provided - whether these were e
 
 As a bonus, when rebuilding the image tags, **width** and **height** attributes are added. While there's no real SEO benefits on doing this, it will cope for faster rendering times in the browser. If image was down-scaled or up-scaled, these values will match the scaled image dimensions.
 
-## 6. Todo:
-* Add a method checking if current file has writing permissions.
-* Add a method to check if the download directory is writable.
-* Add example.
-
-## 7. Author
+## 6. Author
 Nil Portugués Calderó
  - <contact@nilportugues.com>
  - http://nilportugues.com

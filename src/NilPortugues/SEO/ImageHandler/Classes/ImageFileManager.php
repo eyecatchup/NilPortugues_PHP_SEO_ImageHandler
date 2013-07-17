@@ -280,7 +280,7 @@ class ImageFileManager
 
         //WIDTH: Keep % or get the pixel value.
         if (strpos($currentWidth, '%') !== false) {
-            $width = $currentWidth;
+            $width = 0;
         } else {
             $width = $currentWidth;
             settype($width, 'integer');
@@ -288,7 +288,7 @@ class ImageFileManager
 
         //HEIGHT: Keep % or get the pixel value.
         if (strpos($currentHeight, '%') !== false) {
-            $height = $currentHeight;
+            $height = 0;
         } else {
             $height = $currentHeight;
             settype($height, 'integer');

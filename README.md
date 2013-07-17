@@ -1,11 +1,13 @@
 # NilPortugues\SEO\ImageHandler  [![Build Status](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler.png?branch=master)](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler)
 
-## Purpose
+## 1. Purpose
 This PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database, creating an abstraction layer that allows the user handle its web application images.
 
 The main reasons you would do this are **SEO** and saving up disk space.
 
-## How it works
+## 2. Demonstration
+
+## 3. How it works
 This class is meant to be used both in the back-end and front-end of a site.
  * **Back-end**
      * In the backend, this class should handle processing large chuncks of HTML input.
@@ -18,14 +20,14 @@ This class is meant to be used both in the back-end and front-end of a site.
  * **Front-end**
     * In the front-end, this class should be only used to replace the image placeholders for their valid HTML image tags equivalents.
 
-## Data Structures or Databases
+## 4. Data Structures or Databases
 By default, this class includes a SQL (MySQL) database structure to be used with this code. This file can be found at `src/NilPortugues/SEO/ImageHandler/Resources/ImageTable.sql`.
 
 There's no need to use MySQL, and any other database (PostgreSQL, MariaDB,...) or storage system (Redis, flat files...) can be used.
 
 Choose your data record technology by implementing `ImageDataRecordInterface.php` methods in a new class. Using this interface, it will also allow you to use ORMs instead of SQL.
 
-## Code Usage
+## 5. Code Usage
 The only class you will need to use is`\NilPortugues\SEO\ImageHandler\ImageHandler` and has only 3 public methods:
  * **getParsedHtml**: converts HTML with <img> tags to {{IMG}} tags. Saves these images to the data structure. Does image resizing if necessary.
  * **getHtml**: converts HTML with {{IMG}} tags to valid <img> tags. Fills in <img> tags with the alt, title, width and height attributes, if available.
@@ -129,14 +131,12 @@ Finally, if **title** and **alt** attributes are provided - whether these were e
 
 As a bonus, when rebuilding the image tags, **width** and **height** attributes are added. While there's no real SEO benefits on doing this, it will cope for faster rendering times in the browser. If image was down-scaled or up-scaled, these values will match the scaled image dimensions.
 
-## Todo:
-* Add a method to check if the download directory exists
+## 6. Todo:
+* Add a method checking if current file has writing permissions.
 * Add a method to check if the download directory is writable.
-* Add a method checking if current file has writing permittions.
-* Add proper documentation.
+* Add example.
 
-
-## Author
+## 7. Author
 Nil Portugués Calderó
  - <contact@nilportugues.com>
  - http://nilportugues.com

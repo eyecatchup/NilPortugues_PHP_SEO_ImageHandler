@@ -36,7 +36,7 @@ The only class you will need to use is`\NilPortugues\SEO\ImageHandler\ImageHandl
  * **addImage**: adds an image to the image data structure recording the extracted images.
 
 ### Back-end
-```
+```php
 <?php
 
 require 'vendor/autoload.php';
@@ -79,7 +79,7 @@ $processedHtml = $imageHandler->getParsedHtml($html, $baseDir, $downloadDir);
 ```
 
 Under the hood, what's actually doing is:
-```
+```php
 <!-- $html will be transformed to $processedHtml -->
 <img src="http://example.com/path/to/image/directory/external-image.jpg" style="border:2px solid red" data-attribute="example1">
 
@@ -90,7 +90,7 @@ Under the hood, what's actually doing is:
 ### Front-end
 
 The actual PHP code to use is the following:
-```
+```php
 <?php
 
 require 'vendor/autoload.php';
@@ -118,7 +118,7 @@ $imageHandler = new ImageHandler($ihp, $ifm, $io, $ioc, $idr);
 $recoveredHtml = $imageHandler->getHtml($processedHtml, $imageDomainPath);
 ```
 Under the hood, what it is actually doing:
-```
+```php
 <!-- $processedHtml will be transformed to $recoveredHtml -->
 {{IMG|6fd86da74659f04253285e853af26845|style="border:2px solid red"|data-attribute="example1"}}
 

@@ -570,8 +570,9 @@ class ImageHandler
                     unset($imageObjectArrayCopy[$row['file_md5']]);
                 }
             }
+        } else {
+            $doNotPersistList = array();
         }
-
         //Insert first those having no parent hash
         foreach ($imageObjectArrayCopy as $k => $imageObject) {
             $parentHash = $imageObject->getParentHash();

@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler.png?branch=master)](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler)
-# NilPortugues\SEO\ImageHandler
+# [![Build Status](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler.png?branch=master)](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler) NilPortugues\SEO\ImageHandler
 A PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database.
 
 ## Introduction
@@ -22,7 +21,8 @@ Choose your data record technology by implementing an class implementing the `Im
 
 By default, this class includes a SQL (MySQL) database structure to be used with this code. This file can be found at `src/NilPortugues/SEO/ImageHandler/Resources/ImageTable.sql`.
 
-## Back-end Usage:
+## Usage
+### Back-end Usage
 ```
 <?php
 
@@ -74,7 +74,7 @@ Under the hood, what's actually doing is:
 {{IMG|6fd86da74659f04253285e853af26845|style="border:2px solid red"|data-attribute="example1"}}
 ```
 
-## Front-end Usage:
+### Front-end Usage
 
 The actual PHP code to use is the following:
 ```

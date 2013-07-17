@@ -1,6 +1,18 @@
 {
-    "name":"NilPortugues/SEO/ImageHandler",
+    "name":"nilportugues/seo/imagehandler",
     "description":"A PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database.",
+    "type":"library",
+    "keywords":["seo", "search engine optimization", "image processing"],
+    "homepage":"https://github.com/nilopc/NilPortugues_PHP_SEO_ImageHandler",
+    "license":"MIT",
+    "authors":[
+        {
+            "name":"Nil Portugués Calderó",
+            "email":"contact@nilportugues.com",
+            "homepage":"http://nilportugues.com",
+            "role":"Lead Developer"
+        }
+    ],
     "require":{
         "php":">=5.3.0"
     },
@@ -10,13 +22,6 @@
     "config":{
         "bin-dir":"bin/"
     },
-    "license":"MIT",
-    "authors":[
-        {
-            "name":"Nil Portugués Calderó",
-            "email":"contact@nilportugues.com"
-        }
-    ],
     "autoload":{
         "psr-0":{
             "NilPortugues":"src/"

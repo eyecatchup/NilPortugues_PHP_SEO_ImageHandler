@@ -1,7 +1,9 @@
 # NilPortugues\SEO\ImageHandler  [![Build Status](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler.png?branch=master)](https://travis-ci.org/nilopc/NilPortugues_PHP_SEO_ImageHandler)
 
 ## Purpose
-This PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database, creating a abstraction layer that allows the user handle its web application images. The main reason you would do this is SEO.
+This PHP class that extracts image tags from HTML code and allows keeping a record of the processed images in a data structure such as a database, creating an abstraction layer that allows the user handle its web application images.
+
+The main reasons you would do this are **SEO** and saving up disk space.
 
 ## How it works
 This class is meant to be used both in the back-end and front-end of a site.

@@ -24,6 +24,11 @@ There's no need to use MySQL, and any other database (PostgreSQL, MariaDB,...) o
 Choose your data record technology by implementing `ImageDataRecordInterface.php` methods in a new class. Using this interface, it will also allow you to use ORMs instead of SQL.
 
 ## Code Usage
+This class has only 3 public methods:
+ * **getParsedHtml**: converts HTML with <img> tags to {{IMG}} tags. Saves these images to the data structure. Does image resizing if necessary.
+ * **getHtml**: converts HTML with {{IMG}} tags to valid <img> tags. Fills in <img> tags with the alt, title, width and height attributes, if available.
+ * **addImage**: adds an image to the image data structure recording the extracted images.
+
 ### Back-end
 ```
 <?php

@@ -53,6 +53,7 @@ class ImageHandler
 
         // Return data.
         $imageObjectArray = $imageCollection->getCollection();
+
         if (!empty($imageObjectArray)) {
             $imageObject = array_shift($imageObjectArray);
             if (!empty($imageObject)) {
@@ -81,8 +82,14 @@ class ImageHandler
         // Save Images in the data structure and record it to the system if new
         $imageCollection = $this->saveImages($html, $baseDir, $imageDir);
 
+        // Builds tags.
         $commentData = $this->replaceCommentsForPlaceholders($html);
         $html = $this->replaceImgTagForCustomTag($commentData['html'], $imageCollection);
+
+        // Remove any remaining image tags. These are broken images.
+        $html = preg_replace('#(<img.*?>)#', '', $html);
+
+        // Put back in the comments
         $html = $this->replacePlaceholdersForComments($html, $commentData['placeholders']);
 
         return $html;

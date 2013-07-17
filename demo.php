@@ -53,6 +53,9 @@ $html = <<<HTML
     <img src="./images/m2x.png" data-attribute="example1" style="">
     <img src="./images/m2x.png" data-attribute="example1" style="height:500px">
 
+    <!-- THIS IMAGE DOES NOT EXIST -->
+    <img src="http://google.com/image/does/not/exist.jpg">
+
     <!-- SPECIAL CASE 1: HEIGHT OR WIDTH ATTR SHOULD BE USED IF NO WIDTH OR HEIGHT ARE DEFINED IN THE STYLE ATTRIBUTE-->
     <img src="./images/m2x.png" data-attribute="example1" width="150" style="">
 
@@ -93,7 +96,6 @@ echo $recoveredHtml;
 echo "\n\n\n\n\n";
 
 ?>
-
 
 <a href="https://github.com/nilopc/NilPortugues_PHP_SEO_ImageHandler">
     <img style="position: fixed; top: 0; right: 0; border: 0;"

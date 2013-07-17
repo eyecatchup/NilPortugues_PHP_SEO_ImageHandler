@@ -21,11 +21,7 @@ class ImageHandlerTest extends \PHPUnit_Framework_TestCase
     protected $baseDir = './';
     protected $downloadDir = 'images/downloaded';
     protected $imageDomain = 'http://static.mydomain.com/';
-
     protected $testImage = 'images/m2x.png';
-
-    //Images created
-    protected $images = array();
 
     public function setUp()
     {
@@ -44,7 +40,21 @@ class ImageHandlerTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testConvertImageTagsToCustomTags()
+    public function tearDown()
+    {
+        $this->idr = NULL;
+        $this->ihp = NULL;
+        $this->ifm = NULL;
+        $this->io = NULL;
+        $this->ioc = NULL;
+    }
+
+    //__________________________________________________________________
+    //
+    // $this->imageHandler->getParsedHtml() TEST CASES
+    //__________________________________________________________________
+
+    public function testConvertLocalImageTagsToCustomTags_1()
     {
         $html = '<img src="' . $this->testImage . '" data-attribute="example1">';
 
@@ -55,9 +65,20 @@ class ImageHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $newHtml);
     }
 
-    public function testConvertImageTagsToCustomTagsRemoveWidth()
+    public function testConvertLocalImageTagsToCustomTags_2()
     {
-        $html = '<img src="' . $this->testImage . '" style="width:250px" data-attribute="example1">';
+        $html = '<img src="./' . $this->testImage . '" data-attribute="example1">';
+
+        $md5_hash = md5_file($this->baseDir . $this->testImage);
+        $expected = '{{IMG|' . $md5_hash . '|data-attribute="example1"}}';
+
+        $newHtml = $this->imageHandler->getParsedHtml($html, $this->baseDir, $this->downloadDir);
+        $this->assertEquals($expected, $newHtml);
+    }
+
+    public function testConvertLocalImageTagsToCustomTags_3()
+    {
+        $html = '<img src="//' . str_replace(array('http://', 'https://'), '//', $this->imageDomain) . $this->testImage . '" style="width:250px" data-attribute="example1">';
 
         $newHtml = $this->imageHandler->getParsedHtml($html, $this->baseDir, $this->downloadDir);
         $this->assertNotContains('width:250px', $newHtml);
@@ -108,6 +129,25 @@ class ImageHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $newHtml);
     }
 
+    public function testConvertNonExistentImageAndFromExternalSourceToCustomTags_1()
+    {
+        $html = '<img src="http://google.com/image/does/not/exist.jpg">';
+        $recoveredHtml = $this->imageHandler->getParsedHtml($html, $this->baseDir, $this->downloadDir);
+        $this->assertEquals('', $recoveredHtml);
+    }
+
+    public function testConvertNonExistentImageAndFromExternalSourceToCustomTags_2()
+    {
+        $html = '<img src="//google.com/image/does/not/exist.jpg">';
+        $recoveredHtml = $this->imageHandler->getParsedHtml($html, $this->baseDir, $this->downloadDir);
+        $this->assertEquals('', $recoveredHtml);
+    }
+
+    //__________________________________________________________________
+    //
+    // $this->imageHandler->getParsedHtml() TEST CASES
+    //__________________________________________________________________
+
     public function testConvertCustomTagsToImageTagsWhenImageExistsInDataRecord()
     {
         //test case
@@ -157,36 +197,123 @@ class ImageHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $recoveredHtml);
     }
 
-    public function testPersistExistingImageWithImageDomainSrcAndGetImageData()
+    //__________________________________________________________________
+    //
+    // $this->imageHandler->addImage() TEST CASES
+    //__________________________________________________________________
+
+    public function testPersistExistingImageWithLocalSrcAndGetImageData_1()
     {
+        //mock function set up
+        $md5_hash = md5_file($this->baseDir . $this->testImage);
+        list($width, $height) = getimagesize($this->baseDir . $this->testImage);
+        $this->idr
+            ->expects($this->any())
+            ->method('getExistingImageHashes')
+            ->will
+        ($this->returnValue(
+            array
+            (
+                0 => array
+                (
+                    'file_md5' => $md5_hash,
+                    'width' => $width,
+                    'height' => $height,
+                    'filepath' => $this->testImage,
+                    'alt' => '',
+                    'title' => '',
+                ),
+            )
+        ));
+
+        $imgSrc = $this->testImage;
+        $data = $this->imageHandler->addImage($imgSrc, $this->baseDir, $this->downloadDir, $this->imageDomain);
+        $this->assertNotEmpty($data);
+        $this->assertInternalType('array', $data);
+    }
+
+    public function testPersistExistingImageWithLocalSrcAndGetImageData_2()
+    {
+        //mock function set up
+        $md5_hash = md5_file($this->baseDir . $this->testImage);
+        list($width, $height) = getimagesize($this->baseDir . $this->testImage);
+        $this->idr
+            ->expects($this->any())
+            ->method('getExistingImageHashes')
+            ->will
+        ($this->returnValue(
+            array
+            (
+                0 => array
+                (
+                    'file_md5' => $md5_hash,
+                    'width' => $width,
+                    'height' => $height,
+                    'filepath' => $this->testImage,
+                    'alt' => '',
+                    'title' => '',
+                ),
+            )
+        ));
+
+        $imgSrc = './' . $this->testImage;
+
+        $data = $this->imageHandler->addImage($imgSrc, $this->baseDir, $this->downloadDir, $this->imageDomain);
+        $this->assertNotEmpty($data);
+        $this->assertInternalType('array', $data);
+    }
+
+    public function testPersistExistingImageWithLocalSrcAndGetImageData_3()
+    {
+        //mock function set up
+        $md5_hash = md5_file($this->baseDir . $this->testImage);
+        list($width, $height) = getimagesize($this->baseDir . $this->testImage);
+
+        $this->idr
+            ->expects($this->any())
+            ->method('getExistingImageHashes')
+            ->will
+        ($this->returnValue(
+            array
+            (
+                0 => array
+                (
+                    'file_md5' => $md5_hash,
+                    'width' => $width,
+                    'height' => $height,
+                    'filepath' => $this->testImage,
+                    'alt' => '',
+                    'title' => '',
+                ),
+            )
+        ));
+
+        $imgSrc = '/' . $this->testImage;
+
+        $data = $this->imageHandler->addImage($imgSrc, $this->baseDir, $this->downloadDir, $this->imageDomain);
+        $this->assertNotEmpty($data);
+        $this->assertInternalType('array', $data);
 
     }
 
-    public function testPersistExistingImageWithRelativeSrcAndGetImageData()
+    public function testPersistNonExistentLocalImageWithImageDomainSrcAndGetImageData()
     {
-
+        $imgSrc = $this->imageDomain . $this->testImage;
+        $data = $this->imageHandler->addImage($imgSrc, $this->baseDir, $this->downloadDir, $this->imageDomain);
+        $this->assertFalse($data);
     }
 
-    public function testPersistExistingImageWithAbsoluteSrcAndGetImageData()
+    public function testPersistNonExistentExternalImageWithImageDomainSrcAndGetImageData()
     {
+        $imgSrc = "http://google.com/image/does/not/exist.jpg";
+        $data = $this->imageHandler->addImage($imgSrc, $this->baseDir, $this->downloadDir, $this->imageDomain);
+        $this->assertFalse($data);
 
-    }
-
-    public function testPersistNewImageFromExternalSourceAndGetImageData()
-    {
-
-    }
-
-    public function tearDown()
-    {
-        $this->idr = NULL;
-        $this->ihp = NULL;
-        $this->ifm = NULL;
-        $this->io = NULL;
-        $this->ioc = NULL;
+        $imgSrc = "//google.com/image/does/not/exist.jpg";
+        $data = $this->imageHandler->addImage($imgSrc, $this->baseDir, $this->downloadDir, $this->imageDomain);
+        $this->assertFalse($data);
     }
 }
-
 
 class PDOMock extends \PDO
 {

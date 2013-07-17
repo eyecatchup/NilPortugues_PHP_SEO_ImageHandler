@@ -17,11 +17,11 @@ This class is meant to be used both in the back-end and front-end of a site.
     * In the front-end, this class should be only used to replace the image placeholders for their valid HTML image tags equivalents.
 
 ## Data Structures or Databases
+By default, this class includes a SQL (MySQL) database structure to be used with this code. This file can be found at `src/NilPortugues/SEO/ImageHandler/Resources/ImageTable.sql`.
+
 There's no need to use MySQL, and any other database (PostgreSQL, MariaDB,...) or storage system (Redis, flat files...) can be used.
 
-Choose your data record technology by implementing an class implementing the `ImageDataRecordInterface.php` methods. Using this interface, it will allow you to use ORMs such as Doctrine2.
-
-By default, this class includes a SQL (MySQL) database structure to be used with this code. This file can be found at `src/NilPortugues/SEO/ImageHandler/Resources/ImageTable.sql`.
+Choose your data record technology by implementing `ImageDataRecordInterface.php` methods in a new class. Using this interface, it will also allow you to use ORMs instead of SQL.
 
 ## Code Usage
 ### Back-end

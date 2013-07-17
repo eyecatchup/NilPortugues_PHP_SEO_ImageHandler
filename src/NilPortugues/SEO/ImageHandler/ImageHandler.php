@@ -510,6 +510,8 @@ class ImageHandler
                 && $dimensions['width'] > 0
                 && $dimensions['height'] != $height
                 && $dimensions['width'] != $width
+                && strpos($dimensions['height'], '%') === false
+                && strpos($dimensions['width'], '%') === false
             ) {
                 $newFilePath = $path_parts['dirname'] . '/' . $path_parts['filename'] . '.' . $dimensions['width'] . 'x' . $dimensions['height'] . '.' . $path_parts['extension'];
 

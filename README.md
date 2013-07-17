@@ -11,12 +11,14 @@ This class is meant to be used both in the back-end and front-end of a site.
         * Processing HTML means downloading external images and resizing them as previously explained if necessary.
         * Processing HTML means making sure no two identical images will be sitting on the server's image directory or will be loaded from other sources. All images are unique and duplicates are disregarded if these exist in the image database.
     * By processing the images, and separating the images from the actual content, all images are now manipulable.
-    * By coding a CRUD interface in a back-end *(**not provided**)*, an authorized user can edit alt attribute, title attribute and  the image file name values. This changes can be stored in a database and will be reflected elsewhere when replacing the placeholders with the real data.
+    * By coding a CRUD interface in a back-end (**not provided**), an authorized user can edit alt attribute, title attribute and  the image file name values. This changes can be stored in a database and will be reflected elsewhere when replacing the placeholders with the real data.
  * **Front-end**
     * In the front-end, this class should be only used to replace the image placeholders for their valid HTML image tags equivalents.
 
 ## Data Record or Database
-There's no need to use MySQL, and any other database (PostgreSQL, MariaDB,...) or storage system (Redis, flat files...) can be used by implementing the **ImageDataRecordInterface** found at `src/NilPortugues/SEO/ImageHandler/Interfaces/ImageDataRecordInterface.php`. This will also allow you to use ORMs such as Doctrine2 if creating a bundle with it for Symfony2, for example.
+There's no need to use MySQL, and any other database (PostgreSQL, MariaDB,...) or storage system (Redis, flat files...) can be used.
+
+Choose your data record technology by implementing an class implementing the `ImageDataRecordInterface.php` methods. Using this interface, it will allow you to use ORMs such as Doctrine2.
 
 By default, this class includes a SQL (MySQL) database structure to be used with this code. This file can be found at `src/NilPortugues/SEO/ImageHandler/Resources/ImageTable.sql`.
 
